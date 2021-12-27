@@ -109,3 +109,34 @@ Foi utilizado a biblioteca "github.com/nakagami/firebirdsql" para fazer a conex�
 **4 -** Repassado a consulta e depois atribuindo esse resultado para a variável
 **5 -** Exibindo o resultado no console. 
 
+## [API com o banco de dados Firebird](https://github.com/Dev-Anderson/golang/tree/main/api-firebird)
+
+**Pacotes utilizados:**
+> - encoding/json
+> - net/http
+> - fmt
+> - log
+> - database/sql
+> - github.com/nakagami/firebirdsql
+> - github.com/gorilla/mux
+
+**1-** Criando a conexão com o banco de dados para isso utilizei  a biblioteca 'github.com/nakagami/firebirdsql', criado a seguinte função: 
+
+    func  Conexao() (db *sql.DB, err error) {
+    db, err = sql.Open("firebirdsql", "SYSDBA:masterkey@localhost/ecosis/dados/econfe.eco")
+    return
+    }
+**2 -** Criando uma estrutura para receber os retornos do banco de dados, para esse tipo de consulta, utilizei os seguintes campos: 
+
+    type  StructData  struct {
+    Numero int64  `json:"numero"`
+    Serie int64  `json:"serie"`
+    Id string  `json:"id"`
+    }
+
+**3 -** Criar um 'model' para capturar os dados do banco de dados e depois repassando para estrutura que foi criado anteriormente, Criado uma função que faz o seguinte 'select' no banco de dados: 
+
+    SELECT NFE_TBNFESIDE.NUMERO, NFE_TBNFESIDE.SERIE, NFE_TBNFES.ID FROM NFE_TBNFES INNER JOIN NFE_TBNFESIDE ON NFE_TBNFES.GID = NFE_TBNFESIDE.GID WHERE NFE_TBNFES.NUMEROPROTOCOLO IS NOT NULL AND NFE_TBNFES.GID = 1
+
+Se o retorno foi com sucesso, então ele vai jogar o resultado dessa consulta dentro da estrutura criada, caso apresenta falha será exibido a falha no console. 
+**4 -** Arquivo principal 'main.go', desse arquivo foi utilizado o 'mux' para criar uma rota do tipo 'GET' para consulta da nota fiscal. 
