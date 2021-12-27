@@ -28,7 +28,7 @@ func GetNotasAprovadas(response http.ResponseWriter, r *http.Request) {
 
 		} else {
 			Response.Status = http.StatusOK
-			Response.Message = "API Firebird"
+			Response.Message = "Consulta todas as Notas Fiscais Aprovadas"
 			Response.Data = IsiData
 			restponWithJson(response, http.StatusOK, Response)
 
@@ -57,7 +57,7 @@ func GetNotasCanceladas(response http.ResponseWriter, r *http.Request) {
 			restponWithJson(response, http.StatusInternalServerError, Response)
 		} else {
 			Response.Status = http.StatusOK
-			Response.Message = "API Firebird"
+			Response.Message = "Consulta todas as Notas Fiscais Canceladas"
 			Response.Data = IsiData
 			restponWithJson(response, http.StatusOK, Response)
 		}
