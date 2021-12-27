@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func GetNotaFiscal(response http.ResponseWriter, r *http.Request) {
+func GetNotasAprovadas(response http.ResponseWriter, r *http.Request) {
 
 	db, err := config.Conexao()
 	var Response _struct.ResponseData
@@ -19,7 +19,7 @@ func GetNotaFiscal(response http.ResponseWriter, r *http.Request) {
 		restponWithJson(response, http.StatusInternalServerError, Response)
 	} else {
 		_models := models.ModelGetData{DB: db}
-		IsiData, err2 := _models.GetNotaFiscal()
+		IsiData, err2 := _models.GetNotasAprovadas()
 		if err2 != nil {
 			Response.Status = http.StatusInternalServerError
 			Response.Message = err2.Error()
@@ -34,7 +34,34 @@ func GetNotaFiscal(response http.ResponseWriter, r *http.Request) {
 
 		}
 	}
+}
 
+func GetNotasCanceladas(response http.ResponseWriter, r *http.Request) {
+
+	db, err := config.Conexao()
+
+	var Response _struct.ResponseData
+
+	if err != nil {
+		Response.Status = http.StatusInternalServerError
+		Response.Message = err.Error()
+		Response.Data = nil
+		restponWithJson(response, http.StatusInternalServerError, Response)
+	} else {
+		_models := models.ModelGetData{DB: db}
+		IsiData, err2 := _models.GetNotasCanceladas()
+		if err2 != nil {
+			Response.Status = http.StatusInternalServerError
+			Response.Message = err2.Error()
+			Response.Data = nil
+			restponWithJson(response, http.StatusInternalServerError, Response)
+		} else {
+			Response.Status = http.StatusOK
+			Response.Message = "API Firebird"
+			Response.Data = IsiData
+			restponWithJson(response, http.StatusOK, Response)
+		}
+	}
 }
 
 func restponWithJson(w http.ResponseWriter, code int, payload interface{}) {

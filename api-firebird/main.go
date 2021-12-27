@@ -12,7 +12,8 @@ import (
 func main() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/restapi/consultanota", apis.GetNotaFiscal).Methods("GET")
+	router.HandleFunc("/v1/notaaprovada", apis.GetNotasAprovadas).Methods("GET")
+	router.HandleFunc("/v1/notacancelada", apis.GetNotasCanceladas).Methods("GET")
 
 	fmt.Println("API rodando na porta 3000")
 
