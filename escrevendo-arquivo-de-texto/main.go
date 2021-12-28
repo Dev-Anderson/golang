@@ -1,36 +1,67 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"log"
 	"os"
 )
 
-func main() {
-	f := criandoArquivo("C:/temp/1.txt")
-	defer fechandoArquivo(f)
-	escrevendoArquivo(f)
-}
+func escreverTexto(linhas []string, caminhoDoArquivo string) error {
+	arquivo, err := os.Create(caminhoDoArquivo)
 
-func criandoArquivo(p string) *os.File {
-	fmt.Println("Criando arquivo")
-	f, err := os.Create(p)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
-	return f
+	defer arquivo.Close()
+
+	escritor := bufio.NewWriter(arquivo)
+	for _, linha := range linhas {
+		fmt.Fprintln(escritor, linha)
+	}
+
+	return escritor.Flush()
 }
 
-func escrevendoArquivo(f *os.File) {
-	fmt.Println("Escrevendo dentro do arquivo")
-}
-
-func fechandoArquivo(f *os.File) {
-	fmt.Println("Fechando o arquivo")
-	err := f.Close()
+func lerTexto(caminhoDoArquivo string) ([]string, error) {
+	arquivo, err := os.Open(caminhoDoArquivo)
 
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+		return nil, err
+	}
+
+	defer arquivo.Close()
+
+	var linhas []string
+	scanner := bufio.NewScanner(arquivo)
+	for scanner.Scan() {
+		linhas = append(linhas, scanner.Text())
+	}
+
+	return linhas, scanner.Err()
+}
+
+func main() {
+	var conteudo []string
+	conteudo = append(conteudo, "Batatinha Frita 1")
+	conteudo = append(conteudo, "Batatinha Frita 2")
+	conteudo = append(conteudo, "Batatinha Frita 3")
+
+	err := escreverTexto(conteudo, "c:/temp/batatinhafrita.txt")
+
+	if err != nil {
+		log.Fatalf("Erro:", err)
+	}
+
+	conteudo = nil
+	conteudo, err = lerTexto("c:/temp/batatinhafrita.txt")
+
+	if err != nil {
+		log.Fatalf("Erro:", err)
+	}
+
+	for indice, linha := range conteudo {
+		fmt.Println(indice, linha)
 	}
 }
