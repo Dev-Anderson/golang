@@ -25,11 +25,23 @@ type StructDataCanceladas struct {
 }
 
 type StructDataNfe struct {
-	Gid         int64     `json:"gid"`
-	Numero      int64     `json:"numero"`
-	Serie       int64     `json:"serie"`
-	DataEmissao time.Time `json:"dataemissao"`
-	HoraEmissao time.Time `json:"horaemissao"`
-	Id          string    `json:"id"`
-	Protocolo   string    `json:"protocolo"`
+	Gid             int64     `json:"gid"`
+	Numero          int64     `json:"numero"`
+	Serie           int64     `json:"serie"`
+	DataEmissao     time.Time `json:"dataemissao"`
+	HoraEmissao     time.Time `json:"horaemissao"`
+	Id              string    `json:"id"`
+	Protocolo       string    `json:"protocolo"`
+	ValorNotaFiscal float64   `json:"valornotafiscal"`
+}
+
+type StructDataNfce struct {
+	Gid             int64     `json:"gid"`
+	Numero          int64     `json:"numero"`
+	Serie           int64     `json:"serie"`
+	DataEmissao     time.Time `json:"dataemissao"`
+	HoraEmissao     time.Time `json:"horaemissao"`
+	Id              string    `json:id`
+	Protocolo       string    `json:"protocolo"`
+	ValorNotafiscal float64   `json:valornotafiscal`
 }

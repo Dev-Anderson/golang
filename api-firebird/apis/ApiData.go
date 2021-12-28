@@ -62,6 +62,31 @@ func GetNfeAprovada(response http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func GetNfceAprovada(response http.ResponseWriter, r *http.Request) {
+	db, err := config.Conexao()
+	var Response _struct.ResponseData
+	if err != nil {
+		Response.Status = http.StatusInternalServerError
+		Response.Message = err.Error()
+		Response.Data = nil
+		restponWithJson(response, http.StatusInternalServerError, Response)
+	} else {
+		_models := models.ModelGetData{DB: db}
+		IsiData, err2 := _models.GetNfcAprovada()
+		if err2 != nil {
+			Response.Status = http.StatusInternalServerError
+			Response.Message = err2.Error()
+			Response.Data = nil
+			restponWithJson(response, http.StatusInternalServerError, Response)
+		} else {
+			Response.Status = http.StatusOK
+			Response.Message = "Consulta apenas NFC-e Aprovada"
+			Response.Data = IsiData
+			restponWithJson(response, http.StatusOK, Response)
+		}
+	}
+}
+
 func GetNotasCanceladas(response http.ResponseWriter, r *http.Request) {
 
 	db, err := config.Conexao()
