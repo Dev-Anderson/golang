@@ -30,5 +30,5 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println("Conexao com sucesso")
+	fmt.Println("Conectado com sucesso")
 }
