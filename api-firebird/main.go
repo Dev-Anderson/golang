@@ -13,6 +13,7 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/v1/notaaprovada", apis.GetNotasAprovadas).Methods("GET")
+	router.HandleFunc("/v2/nfe/aprovadas", apis.GetNfeAprovada).Methods("GET")
 	router.HandleFunc("/v1/notacancelada", apis.GetNotasCanceladas).Methods("GET")
 
 	fmt.Println("API rodando na porta 3000")

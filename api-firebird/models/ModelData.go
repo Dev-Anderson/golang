@@ -11,7 +11,7 @@ type ModelGetData struct {
 }
 
 func (model ModelGetData) GetNotasAprovadas() (getStruct []_struct.StructData, err error) {
-	row, err := model.DB.Query("SELECT    NFES.GID,    IDE.NUMERO,    IDE.SERIE,    NFES.ID,    NFES.NUMEROPROTOCOLO,    NFES.DIGVALUE,    IDE.DATAEMISSAO,    IDE.HORAEMISSAO FROM NFE_TBNFES NFES INNER JOIN NFE_TBNFESIDE IDE ON NFES.GID = IDE.GID WHERE NFES.NUMEROPROTOCOLO IS NOT NULL AND NFES.DIGVALUE IS NOT NULL")
+	row, err := model.DB.Query("SELECT 	IDE.NUMERO, 	IDE.SERIE, 	IDE.DATAEMISSAO, 	IDE.HORAEMISSAO, 	NFES.ID, 	NFES.NUMEROPROTOCOLO, 	TOT.VNF FROM NFE_TBNFES NFES INNER JOIN NFE_TBNFESIDE IDE ON (NFES.GID = IDE.GID) INNER JOIN NFE_TBCANCELAMENTONFE CAN ON (NFES.GID = CAN.GID) INNER JOIN NFE_TBNFESICMSTOT TOT ON (NFES.GID = TOT.NFE ) WHERE NFES.NUMEROPROTOCOLO IS NOT NULL AND CAN.CANCELADOEM  IS NULL")
 	if err != nil {
 		return nil, err
 	} else {
@@ -19,27 +19,25 @@ func (model ModelGetData) GetNotasAprovadas() (getStruct []_struct.StructData, e
 		var data _struct.StructData
 		for row.Next() {
 			err2 := row.Scan(
-				&data.Gid,
 				&data.Numero,
 				&data.Serie,
-				&data.Id,
-				&data.NumeroProtocolo,
-				&data.DigValue,
 				&data.DataEmissao,
 				&data.HoraEmissao,
+				&data.Id,
+				&data.Protocolo,
+				&data.ValorNotafiscal,
 			)
 			if err2 != nil {
 				return nil, err2
 			} else {
 				_data := _struct.StructData{
-					Gid:             data.Gid,
 					Numero:          data.Numero,
 					Serie:           data.Serie,
-					Id:              data.Id,
-					NumeroProtocolo: data.NumeroProtocolo,
-					DigValue:        data.DigValue,
 					DataEmissao:     data.DataEmissao,
 					HoraEmissao:     data.HoraEmissao,
+					Id:              data.Id,
+					Protocolo:       data.Protocolo,
+					ValorNotafiscal: data.ValorNotafiscal,
 				}
 				_isiStruct = append(_isiStruct, _data)
 			}
@@ -76,6 +74,42 @@ func (model ModelGetData) GetNotasCanceladas() (getStruct []_struct.StructDataCa
 					DataEmissao: data.DataEmissao,
 					HoraEmissao: data.HoraEmissao,
 					CanceladoEm: data.CanceladoEm,
+				}
+				_isiStruct = append(_isiStruct, _data)
+			}
+		}
+		return _isiStruct, nil
+	}
+}
+
+func (model ModelGetData) GetNfeAprovada() (getStruct []_struct.StructDataNfe, err error) {
+	row, err := model.DB.Query("SELECT 	IDE.NUMERO, 	IDE.SERIE, 	IDE.DATAEMISSAO, 	IDE.HORAEMISSAO, 	NFES.ID, 	NFES.NUMEROPROTOCOLO, 	TOT.VNF FROM NFE_TBNFES NFES INNER JOIN NFE_TBNFESIDE IDE ON (NFES.GID = IDE.GID) INNER JOIN NFE_TBCANCELAMENTONFE CAN ON (NFES.GID = CAN.GID) INNER JOIN NFE_TBNFESICMSTOT TOT ON (NFES.GID = TOT.NFE ) WHERE NFES.NUMEROPROTOCOLO IS NOT NULL AND CAN.CANCELADOEM  IS NULL AND IDE.MOD  = 55")
+	if err != nil {
+		return nil, err
+	} else {
+		var _isiStruct []_struct.StructDataNfe
+		var data _struct.StructDataNfe
+		for row.Next() {
+			err2 := row.Scan(
+				&data.Gid,
+				&data.Numero,
+				&data.Serie,
+				&data.DataEmissao,
+				&data.HoraEmissao,
+				&data.Id,
+				&data.Protocolo,
+			)
+			if err2 != nil {
+				return nil, err2
+			} else {
+				_data := _struct.StructDataNfe{
+					Gid:         data.Gid,
+					Numero:      data.Numero,
+					Serie:       data.Serie,
+					Id:          data.Id,
+					DataEmissao: data.DataEmissao,
+					HoraEmissao: data.HoraEmissao,
+					Protocolo:   data.Protocolo,
 				}
 				_isiStruct = append(_isiStruct, _data)
 			}

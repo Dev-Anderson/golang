@@ -5,14 +5,13 @@ import (
 )
 
 type StructData struct {
-	Gid             int64     `json:"gid"`
 	Numero          int64     `json:"numero"`
 	Serie           int64     `json:"serie"`
+	DataEmissao     time.Time `json:"dataemissao"`
+	HoraEmissao     time.Time `json:"horaemissao"`
 	Id              string    `json:"id"`
-	NumeroProtocolo string    `json:numeroprotocolo`
-	DigValue        string    `json:digvalue`
-	DataEmissao     time.Time `json:dataemissao`
-	HoraEmissao     time.Time `json:horaemissao`
+	Protocolo       string    `json:"protocolo"`
+	ValorNotafiscal float64   `json:"valornotafiscal"`
 }
 
 type StructDataCanceladas struct {
@@ -23,4 +22,14 @@ type StructDataCanceladas struct {
 	DataEmissao time.Time `json:"dataemissao"`
 	HoraEmissao time.Time `json:"horaemissao"`
 	CanceladoEm time.Time `json:"canceladoem"`
+}
+
+type StructDataNfe struct {
+	Gid         int64     `json:"gid"`
+	Numero      int64     `json:"numero"`
+	Serie       int64     `json:"serie"`
+	DataEmissao time.Time `json:"dataemissao"`
+	HoraEmissao time.Time `json:"horaemissao"`
+	Id          string    `json:"id"`
+	Protocolo   string    `json:"protocolo"`
 }
