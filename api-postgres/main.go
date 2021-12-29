@@ -13,6 +13,7 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/filmes", api.GetFilmes).Methods("GET")
+	router.HandleFunc("/filmes/{id}", api.GetFilmeID).Methods("GET")
 	router.HandleFunc("/filmes", api.CreateFilmes).Methods("POST")
 	router.HandleFunc("/filmes", api.DeleteFilmes).Methods("DELETE")
 

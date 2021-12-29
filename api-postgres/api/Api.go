@@ -21,7 +21,7 @@ func GetFilmes(w http.ResponseWriter, r *http.Request) {
 
 	printMessage("Consultando os filmes...")
 
-	rows, err := db.Query("select * from filmes order by id")
+	rows, err := db.Query("select * from filmes")
 
 	if err != nil {
 		panic(err)
@@ -30,11 +30,10 @@ func GetFilmes(w http.ResponseWriter, r *http.Request) {
 	var filmes []_struct.Filme
 
 	for rows.Next() {
-		var id int
 		var filmeID string
 		var filmeNome string
 
-		err = rows.Scan(&id, &filmeID, &filmeNome)
+		err = rows.Scan(&filmeID, &filmeNome)
 
 		if err != nil {
 			panic(err)
@@ -44,6 +43,41 @@ func GetFilmes(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var response = _struct.JsonResponse{Type: "sucesso", Data: filmes}
+
+	json.NewEncoder(w).Encode(response)
+}
+
+func GetFilmeID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	id := params["id"]
+
+	db := config.ConfigDB()
+
+	printMessage("Consultando o filme com o ID " + id)
+
+	rows, err := db.Query("select * from filmes where filmeid = $1", id)
+
+	if err != nil {
+		panic(err)
+	}
+
+	var filmes []_struct.Filme
+
+	for rows.Next() {
+		var filmeID string
+		var filmeNome string
+
+		err = rows.Scan(&filmeID, &filmeNome)
+
+		if err != nil {
+			panic(err)
+		}
+
+		filmes = append(filmes, _struct.Filme{FilmeID: filmeID, FilmeNome: filmeNome})
+	}
+
+	var response = _struct.JsonResponse{Type: "sucesso", Message: "Consultando Filme", Data: filmes}
 
 	json.NewEncoder(w).Encode(response)
 }
