@@ -9,7 +9,7 @@ import (
 )
 
 func GetNotasAprovadas(response http.ResponseWriter, r *http.Request) {
-
+	
 	db, err := config.Conexao()
 	var Response _struct.ResponseData
 	if err != nil {

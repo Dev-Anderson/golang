@@ -7,7 +7,7 @@ import (
 )
 
 func Conexao() (db *sql.DB, err error) {
-	db, err = sql.Open("firebirdsql", "SYSDBA:masterkey@localhost/ecosis/dados/ECONFE.ECO")
+	db, err = sql.Open("firebirdsql", "SYSDBA:masterkey@localhost/temp/ECONFE.ECO")
 
 	return
 }

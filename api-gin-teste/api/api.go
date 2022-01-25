@@ -26,7 +26,7 @@ func GetAlbumId(c *gin.Context) {
 }
 
 func PostAlbum(c *gin.Context) {
-	var newAlbum = models.Albums
+	var newAlbum models.Album
 
 	if err := c.BindJSON(&newAlbum); err != nil {
 		return
