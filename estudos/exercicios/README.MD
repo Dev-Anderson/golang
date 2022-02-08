@@ -11,6 +11,7 @@ Agora demonstre os valores nestas variáveis, com:
 
 Uma única declaração print
 Múltiplas declarações print
+
 Solução: https://play.golang.org/p/yYXnWXIQNa
 
 
@@ -23,6 +24,7 @@ Identificador "z" deverá ter tipo bool
 Na função main:
 Demonstre os valores de cada identificador
 O compilador atribuiu valores para essas variáveis. Como esses valores se chamam?
+
 Solução: https://play.golang.org/p/pAFd-F7uGZ
 
 
@@ -36,4 +38,20 @@ para "z" atribua true
 Na função main:
 Use fmt.Sprintf para atribuir todos esses valores a uma única variável. Faça essa atribuição de tipo string a uma variável de nome "s" utilizando o operador curto de declaração.
 Demonstre a variável "s".
+
 Solução: https://play.golang.org/p/QFctSQB_h3
+
+
+## Exercicio 04 
+
+Crie um tipo. O tipo subjacente deve ser int.
+Crie uma variável para este tipo, com o identificador "x", utilizando a palavra-chave var.
+Na função main:
+Demonstre o valor da variável "x"
+Demonstre o tipo da variável "x"
+Atribua 42 à variável "x" utilizando o operador "="
+Demonstre o valor da variável "x"
+
+Para os aventureiros: https://golang.org/ref/spec#Types
+Agora já somos quase ninjas nível 1!
+Solução: https://play.golang.org/p/snm4WuuYmG
