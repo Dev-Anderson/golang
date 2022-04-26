@@ -27,6 +27,10 @@ func main() {
 	_, e := db.Exec(insertPedido)
 	CheckError(e)
 
+	insertPedido2 := `insert into pedido (gid) values($1)`
+	_, e = db.Exec(insertPedido2, "333")
+	CheckError(e)
+
 }
 
 func CheckError(err error) {
