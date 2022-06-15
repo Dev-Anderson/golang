@@ -4,6 +4,7 @@ import (
 	"digital-bank/helpers"
 
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type User struct {
@@ -22,7 +23,7 @@ type Account struct {
 }
 
 func connectDB() *gorm.DB {
-	db, err := gorm.Open("postgres", "host:127.0.0.1 port=5432 user=postgres dbname=digital-bank password=postgres sslmode=disable")
+	db, err := gorm.Open("postgres", "host=127.0.0.1 port=5432 user=user dbname=digital-bank password=password sslmode=disable")
 	helpers.HandleErr(err)
 	return db
 }
@@ -30,14 +31,14 @@ func connectDB() *gorm.DB {
 func createAccounts() {
 	db := connectDB()
 
-	user := [2]User{
-		{Username: "Martin", Email: "margin@martin.com.br"},
-		{Username: "Marcos", Email: "marcos@marcos.com.br"},
+	users := [2]User{
+		{Username: "Anderson", Email: "anderson@martin.com"},
+		{Username: "Silva", Email: "silva@michael.com"},
 	}
 
-	for i := 0; i < len(user); i++ {
-		generatedPassword := helpers.HashAndSalt([]byte(user[i].Username))
-		user := User{Username: user[i].Username, Email: user[i].Email, Password: generatedPassword}
+	for i := 0; i < len(users); i++ {
+		generatedPassword := helpers.HashOnlyVulnerable([]byte(users[i].Username))
+		user := User{Username: users[i].Username, Email: users[i].Email, Password: generatedPassword}
 		db.Create(&user)
 
 		account := Account{Type: "Daily Account", Name: string(users[i].Username + "'s" + " account"), Balance: uint(10000 * int(i+1)), UserID: user.ID}
