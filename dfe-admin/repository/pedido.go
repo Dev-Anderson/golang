@@ -19,7 +19,7 @@ func GetPedido() []data.Pedido {
 	var pedido []data.Pedido
 	for rows.Next() {
 		var Gid int
-
+		
 		err = rows.Scan(&Gid)
 
 		if err != nil {

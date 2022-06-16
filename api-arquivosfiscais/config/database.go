@@ -6,14 +6,15 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
 type env struct {
-	host     string
-	port     string
-	user     string
-	pass     string
-	database string
+	Host     string
+	Port     string
+	User     string
+	Pass     string
+	Database string
 }
 
 func GetDb() *sql.DB {
@@ -24,13 +25,13 @@ func GetDb() *sql.DB {
 
 	var config = env{}
 
-	config.host = os.Getenv{"host"}
-	config.port = os.Getenv{"port"}
-	config.user = os.Getenv{"user"}
-	config.pass = os.Getenv{"pass"}
-	config.database = os.Getenv{"db"}
+	config.Host = os.Getenv("host")
+	config.Port = os.Getenv("port")
+	config.User = os.Getenv("user")
+	config.Pass = os.Getenv("pass")
+	config.Database = os.Getenv("db")
 
-	info := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", config.host, config.user, config.pass, config.database)
+	info := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", config.Host, config.Port, config.User, config.Pass, config.Database)
 	db, err := sql.Open("postgres", info)
 
 	if err != nil {

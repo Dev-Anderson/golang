@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	banco = "/ecosis/dados/ecodados.eco"
+	banco = "/temp/base/ECODADOS.ECO"
 )
 
 func ConnectDB() (db *sql.DB) {
